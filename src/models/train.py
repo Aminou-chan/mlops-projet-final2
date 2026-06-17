@@ -1,3 +1,4 @@
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -18,8 +19,14 @@ from src.models.evaluate import evaluate_model
 from src.models.register import register_best_model
 
 
-EXPERIMENT_NAME = "california_housing_regression"
-TRACKING_URI = "sqlite:///mlflow.db"
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+EXPERIMENT_NAME = os.getenv("MLFLOW_EXPERIMENT_NAME", "california_housing_regression")
+TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "sqlite:///mlflow.db")
 
 CV_FOLDS = 5
 SCORING = "neg_root_mean_squared_error"   # RandomizedSearchCV maximise -> on prend -RMSE

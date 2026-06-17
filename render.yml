@@ -1,0 +1,26 @@
+services:
+  # --- Service 1 : l'API FastAPI ---
+  - type: web
+    name: immoprix-api
+    runtime: docker
+    dockerfilePath: ./docker/Dockerfile
+    dockerContext: .
+    region: frankfurt
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: true
+    dockerCommand: sh -c "uv run uvicorn src.api.main:app --host 0.0.0.0 --port ${PORT:-8000}"
+
+  # --- Service 2 : le Streamlit (MEME image, commande differente) ---
+  - type: web
+    name: immoprix-streamlit
+    runtime: docker
+    dockerfilePath: ./docker/Dockerfile
+    dockerContext: .
+    region: frankfurt
+    plan: free
+    autoDeploy: true
+    dockerCommand: sh -c "uv run streamlit run src/api/streamlit_app.py --server.port ${PORT:-8501} --server.address 0.0.0.0 --server.headless true"
+    envVars:
+      - key: API_URL
+        value: https://immoprix-api.onrender.com

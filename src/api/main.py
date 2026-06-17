@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import pickle
 
@@ -5,7 +6,11 @@ import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-MODEL_PATH = Path("models/best_model.pkl")
+from dotenv import load_dotenv
+
+load_dotenv()
+
+MODEL_PATH = Path(os.getenv("MODEL_PATH", "models/best_model.pkl"))
 
 # Ordre des features = ordre des colonnes utilisees a l'entrainement.
 FEATURE_ORDER = [
