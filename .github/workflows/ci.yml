@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality-and-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Installer uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      # Installe les dependances figees par le lock (groupe dev inclus)
+      - name: Installer les dependances
+        run: uv sync --frozen
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+
+      - name: Format (ruff)
+        run: uv run ruff format --check .
+
+      - name: Typage (mypy)
+        run: uv run mypy src
+
+      # Lance les tests ; echoue si la couverture passe sous 70 %
+      - name: Tests + couverture
+        run: uv run pytest --cov=src --cov-report=term-missing --cov-fail-under=70
