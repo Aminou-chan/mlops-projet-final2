@@ -9,9 +9,9 @@ services:
     plan: free
     healthCheckPath: /health
     autoDeploy: true
-    dockerCommand: sh -c "uvicorn src.api.main:app --host 0.0.0.0 --port ${PORT:-8000}"
+    dockerCommand: uvicorn src.api.main:app --host 0.0.0.0 --port $PORT
 
-  # --- Service 2 : le Streamlit (MEME image, commande differente) ---
+  # --- Service 2 : le Streamlit (meme image, commande differente) ---
   - type: web
     name: immoprix-streamlit
     runtime: docker
@@ -20,7 +20,7 @@ services:
     region: frankfurt
     plan: free
     autoDeploy: true
-    dockerCommand: sh -c "streamlit run src/api/streamlit_app.py --server.port ${PORT:-8501} --server.address 0.0.0.0 --server.headless true"
+    dockerCommand: streamlit run src/api/streamlit_app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
     envVars:
       - key: API_URL
         value: https://immoprix-api.onrender.com
