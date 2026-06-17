@@ -21,8 +21,14 @@ SERVING_URL = os.getenv("MLFLOW_SERVING_URL", "http://127.0.0.1:5001/invocations
 
 # Ordre des features attendu par le modele (California Housing)
 FEATURE_ORDER = [
-    "MedInc", "HouseAge", "AveRooms", "AveBedrms",
-    "Population", "AveOccup", "Latitude", "Longitude",
+    "MedInc",
+    "HouseAge",
+    "AveRooms",
+    "AveBedrms",
+    "Population",
+    "AveOccup",
+    "Latitude",
+    "Longitude",
 ]
 
 SAMPLES = [
