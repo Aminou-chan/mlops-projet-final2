@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: immoprix:latest
+    ports:
+      - "8000:8000"
+    command: sh -c "uvicorn src.api.main:app --host 0.0.0.0 --port 8000"
+
+  streamlit:
+    image: immoprix:latest
+    depends_on:
+      - api
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://api:8000
+    command: sh -c "streamlit run src/api/streamlit_app.py --server.port 8501 --server.address 0.0.0.0 --server.headless true"

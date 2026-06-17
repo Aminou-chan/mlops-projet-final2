@@ -6,6 +6,8 @@ COPY --from=ghcr.io/astral-sh/uv:0.5 /uv /uvx /bin/
 WORKDIR /app
 
 
+ENV UV_PROJECT_ENVIRONMENT=/usr/local
+
 COPY pyproject.toml uv.lock ./
 
 
@@ -20,4 +22,4 @@ EXPOSE 8000
 
 
 
-CMD ["sh", "-c", "uv run uvicorn src.api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "uvicorn src.api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
