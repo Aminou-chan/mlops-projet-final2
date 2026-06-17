@@ -1,3 +1,9 @@
+"""Tests des métriques d'évaluation de régression.
+
+This module validates RMSE, MAE, and R2 calculations over deterministic
+examples as well as randomized inputs using Hypothesis property-based tests.
+"""
+
 import numpy as np
 import pytest
 from hypothesis import given, settings
@@ -16,13 +22,14 @@ from src.models.evaluate import evaluate_model
     ],
 )
 def test_evaluate_known_cases(y_true, y_pred, expected_rmse, expected_mae):
+    """Vérifie les métriques pour des cas déterministes connus."""
     metrics = evaluate_model(np.array(y_true), np.array(y_pred))
     assert metrics["rmse"] == pytest.approx(expected_rmse)
     assert metrics["mae"] == pytest.approx(expected_mae)
 
 
 def test_evaluate_perfect_prediction_r2():
-    """Given-When-Then : prediction parfaite -> R2 = 1."""
+    """Si la prédiction est parfaite, le R2 doit être égal à 1."""
     y = np.array([1.0, 2.0, 3.0, 4.0])
     metrics = evaluate_model(y, y)
     assert metrics["r2"] == pytest.approx(1.0)

@@ -1,3 +1,9 @@
+"""Tests for raw data validation using Great Expectations results.
+
+These unit tests confirm that valid data passes, invalid values fail,
+and human-readable validation summary output is produced.
+"""
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -25,11 +31,13 @@ def conforming_df():
 
 
 def test_valid_data_passes(conforming_df):
+    """Vérifie qu'un DataFrame conforme passe la validation."""
     result = validate_dataframe(conforming_df)
     assert result.success is True
 
 
 def test_out_of_range_fails(conforming_df):
+    """Vérifie qu'une valeur hors plage géographique est rejetée."""
     df = conforming_df.copy()
     df.loc[0, "Latitude"] = 99.0  # hors plage
     result = validate_dataframe(df)
@@ -37,6 +45,7 @@ def test_out_of_range_fails(conforming_df):
 
 
 def test_null_value_fails(conforming_df):
+    """Vérifie qu'une valeur manquante dans les données est détectée."""
     df = conforming_df.copy()
     df.loc[0, "MedInc"] = np.nan  # valeur manquante
     result = validate_dataframe(df)
@@ -44,6 +53,7 @@ def test_null_value_fails(conforming_df):
 
 
 def test_summarize_runs(conforming_df, capsys):
+    """Vérifie que la fonction de résumé affiche un message de validation globale."""
     from src.validation.data_validation import summarize
 
     result = validate_dataframe(conforming_df)

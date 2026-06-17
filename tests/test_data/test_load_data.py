@@ -1,3 +1,9 @@
+"""Tests des utilitaires de chargement de données.
+
+The data loader is tested with a mocked housing dataset fetch so no network
+request is performed during the unit test.
+"""
+
 import types
 
 import pandas as pd
@@ -6,7 +12,7 @@ import src.data.load_data as ld
 
 
 def test_load_returns_dataframe(monkeypatch):
-    """On mocke fetch_california_housing : pas de telechargement reseau."""
+    """Mock the remote data fetch and verify a DataFrame is returned."""
     df = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
     monkeypatch.setattr(
         ld,

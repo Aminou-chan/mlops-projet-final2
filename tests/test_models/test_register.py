@@ -1,3 +1,9 @@
+"""Tests basés sur des mocks pour la logique d'enregistrement de modèle MLflow.
+
+The tests verify that the registration wrapper builds the correct URI and
+aliases the best model without making real MLflow network calls.
+"""
+
 import types
 from unittest.mock import MagicMock
 
@@ -5,7 +11,7 @@ import src.models.register as reg
 
 
 def test_register_best_model(monkeypatch):
-    """On mocke MLflow : aucun vrai registre n'est touche."""
+    """Mocke MLflow pour tester l'enregistrement et l'alias du meilleur modèle."""
     fake_version = types.SimpleNamespace(version="7")
     register_mock = MagicMock(return_value=fake_version)
     client_mock = MagicMock()

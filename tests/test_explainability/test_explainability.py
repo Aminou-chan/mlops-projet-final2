@@ -41,6 +41,7 @@ def test_global_importance_unsupported_model(workdir, sample_frame):
 
 
 def _write_model(model, pipeline):
+    """Enregistre un modèle et ses métadonnées dans l'arborescence de test."""
     with open("models/best_model.pkl", "wb") as f:
         pickle.dump(model, f)
     with open("models/best_model_metadata.json", "w", encoding="utf-8") as f:
@@ -48,6 +49,7 @@ def _write_model(model, pipeline):
 
 
 def test_global_real_init_tree(tiny_processed, tree_model):
+    """Teste l'initialisation réelle de l'analyzer global pour un modèle d'arbre."""
     _write_model(tree_model, "tree_pipeline")
     analyzer = GlobalFeatureAnalyzer()  # __init__ + _load_model + _load_metadata
     result = analyzer.compute_global_importance()  # branche feature_importances_
@@ -84,10 +86,11 @@ def test_local_shap_values_and_plot(workdir, tree_model, sample_frame, monkeypat
 
 
 def test_local_real_init_and_explain(tiny_processed, tree_model):
+    """Teste l'initialisation réelle du local analyzer et la visualisation SHAP."""
     _write_model(tree_model, "tree_pipeline")
     analyzer = (
         LocalFeatureAnalyzer()
-    )  # init reelle : _load_model/_load_metadata/_load_sample + shap
+    )  # init réelle : _load_model/_load_metadata/_load_sample + shap
     analyzer.plot_beeswarm()
     analyzer.explain_sample(0)  # waterfall d'un exemple
     analyzer.explain_samples(2)  # plusieurs waterfalls

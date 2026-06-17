@@ -1,3 +1,9 @@
+"""Tests de l'orchestration d'entraînement et de la sélection de modèles.
+
+These tests cover model configuration, best candidate selection based on RMSE,
+and the end-to-end training wrapper with MLflow tracking mocked out.
+"""
+
 import contextlib
 import os
 
@@ -10,6 +16,7 @@ from src.models.train import ModelConfig, ModelTrainer, get_models
 
 
 def test_get_models_structure():
+    """Vérifie que le catalogue de modèles contient les configurations attendues."""
     models = get_models()
     assert [m.name for m in models] == [
         "linear_regression",
@@ -22,6 +29,7 @@ def test_get_models_structure():
 
 
 def test_pipeline_property():
+    """Vérifie que la propriété pipeline s'assemble avec le bon nom."""
     lin = ModelConfig("x", LinearRegression(), features="linear")
     tree = ModelConfig("y", LinearRegression(), features="tree")
     assert lin.pipeline == "linear_pipeline"
@@ -29,6 +37,7 @@ def test_pipeline_property():
 
 
 def test_update_best_picks_lowest_rmse():
+    """Vérifie que le meilleur modèle est celui avec le RMSE le plus bas."""
     t = ModelTrainer.__new__(ModelTrainer)
     t.best = None
     t.best_model = None
@@ -80,12 +89,13 @@ def mock_mlflow(monkeypatch):
 
 
 def test_full_training_run(tiny_processed, mock_mlflow, monkeypatch):
+    """Exécute un entraînement complet avec des modèles légers et vérifie la sortie."""
     monkeypatch.setattr(train, "get_models", _light_models)
 
     trainer = ModelTrainer()
     trainer.run()
 
-    # un meilleur modele a ete choisi et sauvegarde
+    # un meilleur modèle a été choisi et sauvegardé
     assert trainer.best is not None
     assert os.path.exists("models/best_model.pkl")
     assert os.path.exists("models/best_model_metadata.json")

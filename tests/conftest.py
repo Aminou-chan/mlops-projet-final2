@@ -1,3 +1,10 @@
+"""Fixtures de test partagées et utilitaires pour le projet.
+
+Ce module construit des données synthétiques et configure des répertoires
+temporaires pour les tests qui ont besoin de modèles, de données traitées,
+et de rapports sans modifier l'espace de travail principal.
+"""
+
 import os
 import pickle
 import tempfile
@@ -22,6 +29,7 @@ FEATURES = [
 
 
 def _make_frame(n=60, seed=0):
+    """Génère un DataFrame synthétique avec le schéma de caractéristiques du projet."""
     rng = np.random.default_rng(seed)
     return pd.DataFrame(
         {
@@ -37,8 +45,8 @@ def _make_frame(n=60, seed=0):
     )[FEATURES]
 
 
-# Un modele factice doit exister AVANT l'import de src.api.main
-# (main.py charge le modele au moment de l'import).
+# Un modèle factice doit exister AVANT l'import de src.api.main
+# because main.py loads the model during import.
 _X = _make_frame()
 _y = _X["MedInc"] * 2 + 1
 _api_model = LinearRegression().fit(_X, _y)
@@ -50,11 +58,13 @@ os.environ["MODEL_PATH"] = str(_tmp_model)
 
 @pytest.fixture
 def sample_frame():
+    """Fournit un DataFrame synthétique de référence pour les tests."""
     return _make_frame()
 
 
 @pytest.fixture
 def tree_model():
+    """Prépare un modèle GradientBoostingRegressor entraîné sur des données synthétiques."""
     X = _make_frame(n=80, seed=1)
     y = X["MedInc"] * 2 + X["AveOccup"] - 0.5
     return GradientBoostingRegressor(n_estimators=30, random_state=42).fit(X, y)
@@ -62,8 +72,11 @@ def tree_model():
 
 @pytest.fixture
 def tiny_processed(tmp_path, monkeypatch):
-    """Mini dataset traite + arborescence, dans un dossier temporaire.
-    Sert aux tests de train.py et des analyzers (lecture sur disque)."""
+    """Create a minimal processed dataset and working folders in a temp dir.
+
+    This fixture is used by training and explainability tests that load
+    data and model artifacts from disk.
+    """
     from sklearn.model_selection import train_test_split
 
     monkeypatch.chdir(tmp_path)
