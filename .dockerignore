@@ -1,0 +1,14 @@
+.venv/
+mlruns/
+notebooks/
+data/raw/
+reports/
+tests/
+.git/
+.github/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/

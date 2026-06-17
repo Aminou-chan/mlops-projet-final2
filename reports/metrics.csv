@@ -1,0 +1,4 @@
+run_id,model,pipeline,cv_rmse,rmse,mae,r2,best_params
+aeeb95464a0045a5bb3d491cea8f3ce0,gradient_boosting,tree_pipeline,0.4810083001403173,0.4769001686307054,0.31832381741323057,0.8264406192139315,"{""learning_rate"": 0.12973169683940733, ""max_depth"": 4, ""n_estimators"": 221, ""subsample"": 0.7467983561008608}"
+f528a235bb014cdda7a9310f9eab1bf6,random_forest,tree_pipeline,0.5092433906212998,0.5039166270131253,0.3263653387585663,0.8062193016098189,"{""max_depth"": 30, ""min_samples_leaf"": 2, ""min_samples_split"": 4, ""n_estimators"": 314}"
+3742ce019ba442deab396d2b195dc251,linear_regression,linear_pipeline,,0.6832669908810012,0.493416818503782,0.6437342932018939,"{""copy_X"": true, ""fit_intercept"": true, ""n_jobs"": null, ""positive"": false, ""tol"": 1e-06}"

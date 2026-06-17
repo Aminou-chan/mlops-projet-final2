@@ -1,0 +1,3 @@
+from src.explainability.global_analysis import GlobalFeatureAnalyzer
+
+GlobalFeatureAnalyzer().compute_global_importance()

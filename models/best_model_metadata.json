@@ -1,0 +1,10 @@
+{
+    "run_id": "aeeb95464a0045a5bb3d491cea8f3ce0",
+    "model": "gradient_boosting",
+    "pipeline": "tree_pipeline",
+    "cv_rmse": 0.4810083001403173,
+    "rmse": 0.4769001686307054,
+    "mae": 0.31832381741323057,
+    "r2": 0.8264406192139315,
+    "best_params": "{\"learning_rate\": 0.12973169683940733, \"max_depth\": 4, \"n_estimators\": 221, \"subsample\": 0.7467983561008608}"
+}
