@@ -10,6 +10,7 @@ au format `dataframe_split` et affiche la prediction renvoyee.
 """
 
 import os
+from typing import Any
 
 import requests
 from dotenv import load_dotenv
@@ -31,6 +32,7 @@ FEATURE_ORDER = [
     "Longitude",
 ]
 
+# Deux maisons d'exemple
 SAMPLES = [
     [8.3252, 41.0, 6.984, 1.024, 322.0, 2.556, 37.88, -122.23],
     [3.2596, 33.0, 5.017, 1.006, 2300.0, 3.691, 34.05, -118.24],
@@ -39,7 +41,7 @@ SAMPLES = [
 
 def predict(samples: list[list[float]]) -> list[float]:
     """Envoie les echantillons au serveur MLflow et renvoie les predictions."""
-    payload = {
+    payload: dict[str, Any] = {
         "dataframe_split": {
             "columns": FEATURE_ORDER,
             "data": samples,
