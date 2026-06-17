@@ -42,13 +42,18 @@ longitude = st.sidebar.slider("Longitude", -124.4, -114.3, -119.57, 0.01)
 
 # ---------- En-tete ----------
 st.title("🏠 ImmoPrix — Estimation de prix immobilier")
-st.caption("Prediction du prix median d'un logement en Californie a partir du modele MLOps.")
+st.caption(
+    "Prediction du prix median d'un logement en Californie a partir du modele MLOps."
+)
 
 # Etat de l'API
 if check_api():
     st.success(f"API connectee ({API_URL})", icon="✅")
 else:
-    st.warning(f"API injoignable sur {API_URL} — lance le conteneur avant de predire.", icon="⚠️")
+    st.warning(
+        f"API injoignable sur {API_URL} — lance le conteneur avant de predire.",
+        icon="⚠️",
+    )
 
 st.divider()
 

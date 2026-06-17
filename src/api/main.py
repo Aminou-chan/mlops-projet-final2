@@ -14,8 +14,14 @@ MODEL_PATH = Path(os.getenv("MODEL_PATH", "models/best_model.pkl"))
 
 # Ordre des features = ordre des colonnes utilisees a l'entrainement.
 FEATURE_ORDER = [
-    "MedInc", "HouseAge", "AveRooms", "AveBedrms",
-    "Population", "AveOccup", "Latitude", "Longitude",
+    "MedInc",
+    "HouseAge",
+    "AveRooms",
+    "AveBedrms",
+    "Population",
+    "AveOccup",
+    "Latitude",
+    "Longitude",
 ]
 
 
@@ -31,7 +37,7 @@ class HouseFeatures(BaseModel):
 
 
 class Prediction(BaseModel):
-    med_house_val: float        # cible brute predite (en 100k $)
+    med_house_val: float  # cible brute predite (en 100k $)
     predicted_price_usd: float  # meme valeur convertie en dollars
 
 

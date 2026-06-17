@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-REGISTERED_MODEL_NAME = os.getenv("REGISTERED_MODEL_NAME", "california_housing_best_model")
+REGISTERED_MODEL_NAME = os.getenv(
+    "REGISTERED_MODEL_NAME", "california_housing_best_model"
+)
 CHAMPION_ALIAS = os.getenv("MODEL_ALIAS", "champion")
 TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "sqlite:///mlflow.db")
 

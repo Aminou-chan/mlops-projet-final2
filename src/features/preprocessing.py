@@ -8,12 +8,7 @@ from sklearn.preprocessing import RobustScaler
 
 TARGET = "MedHouseVal"
 
-LOG_COLUMNS = [
-    "AveRooms",
-    "AveBedrms",
-    "Population",
-    "AveOccup"
-]
+LOG_COLUMNS = ["AveRooms", "AveBedrms", "Population", "AveOccup"]
 
 
 def preprocess_data(input_path: str = "data/raw/california_housing.csv"):
@@ -41,15 +36,11 @@ def preprocess_data(input_path: str = "data/raw/california_housing.csv"):
 
     # Single split for both pipelines
     X_train, X_test, y_train, y_test = train_test_split(
-        X,
-        y,
-        test_size=0.2,
-        random_state=42
+        X, y, test_size=0.2, random_state=42
     )
 
-
     # Pipeline 1 : Linear models
-    
+
     X_train_linear = X_train.copy()
     X_test_linear = X_test.copy()
 
@@ -69,47 +60,26 @@ def preprocess_data(input_path: str = "data/raw/california_housing.csv"):
         pickle.dump(scaler, f)
 
     # Save linear pipeline data
-    pd.DataFrame(
-        X_train_linear,
-        columns=X_train.columns
-    ).to_csv(
-        "data/processed/X_train_linear.csv",
-        index=False
+    pd.DataFrame(X_train_linear, columns=X_train.columns).to_csv(
+        "data/processed/X_train_linear.csv", index=False
     )
 
-    pd.DataFrame(
-        X_test_linear,
-        columns=X_test.columns
-    ).to_csv(
-        "data/processed/X_test_linear.csv",
-        index=False
+    pd.DataFrame(X_test_linear, columns=X_test.columns).to_csv(
+        "data/processed/X_test_linear.csv", index=False
     )
-
 
     # Pipeline 2 : Tree models
-    
+
     X_train_tree = X_train.copy()
     X_test_tree = X_test.copy()
 
-    X_train_tree.to_csv(
-        "data/processed/X_train_tree.csv",
-        index=False
-    )
+    X_train_tree.to_csv("data/processed/X_train_tree.csv", index=False)
 
-    X_test_tree.to_csv(
-        "data/processed/X_test_tree.csv",
-        index=False
-    )
+    X_test_tree.to_csv("data/processed/X_test_tree.csv", index=False)
 
     # Save targets
-    y_train.to_csv(
-        "data/processed/y_train.csv",
-        index=False
-    )
+    y_train.to_csv("data/processed/y_train.csv", index=False)
 
-    y_test.to_csv(
-        "data/processed/y_test.csv",
-        index=False
-    )
+    y_test.to_csv("data/processed/y_test.csv", index=False)
 
     print("Preprocessing completed successfully.")

@@ -46,10 +46,12 @@ class GlobalFeatureAnalyzer:
         else:
             raise ValueError("Model does not support feature importance.")
 
-        result = pd.DataFrame({
-            "feature": X.columns,
-            "importance": importance,
-        })
+        result = pd.DataFrame(
+            {
+                "feature": X.columns,
+                "importance": importance,
+            }
+        )
 
         result = result.sort_values(by="importance", ascending=False)
 
