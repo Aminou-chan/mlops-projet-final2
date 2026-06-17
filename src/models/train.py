@@ -19,7 +19,6 @@ from src.models.evaluate import evaluate_model
 from src.models.register import register_best_model
 
 
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -29,7 +28,7 @@ EXPERIMENT_NAME = os.getenv("MLFLOW_EXPERIMENT_NAME", "california_housing_regres
 TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "sqlite:///mlflow.db")
 
 CV_FOLDS = 5
-SCORING = "neg_root_mean_squared_error"   # RandomizedSearchCV maximise -> on prend -RMSE
+SCORING = "neg_root_mean_squared_error"  # RandomizedSearchCV maximise -> on prend -RMSE
 RANDOM_STATE = 42
 
 
@@ -39,9 +38,9 @@ class ModelConfig:
 
     name: str
     estimator: RegressorMixin
-    features: str                       # "linear" ou "tree"
+    features: str  # "linear" ou "tree"
     param_distributions: dict = field(default_factory=dict)  # {} = rien a tuner
-    n_iter: int = 10                    # nb de combinaisons tirees au hasard
+    n_iter: int = 10  # nb de combinaisons tirees au hasard
 
     @property
     def pipeline(self) -> str:
@@ -198,12 +197,16 @@ class ModelTrainer:
         for config in get_models():
             self._train_one(config, y_train, y_test)
 
+        assert self.best is not None
+
         self._save_results()
         self._save_best_model()
         register_best_model(self.best["run_id"])
 
-        print(f"\nMeilleur modele : {self.best['model']} "
-              f"(test RMSE = {self.best['rmse']:.4f})")
+        print(
+            f"\nMeilleur modele : {self.best['model']} "
+            f"(test RMSE = {self.best['rmse']:.4f})"
+        )
 
 
 def train_and_track_models() -> None:
