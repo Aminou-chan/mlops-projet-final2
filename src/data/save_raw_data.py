@@ -1,4 +1,4 @@
-# ==================== SCRIPT DE TÉLÉCHARGEMENT DES DONNÉES ====================
+
 """
 Script autonome pour télécharger le dataset California Housing depuis scikit-learn
 et le sauvegarder en CSV local.
@@ -12,7 +12,6 @@ Ce script peut être exécuté directement avec : python save_raw_data.py
 
 from load_data import load_california_housing
 
-# ==================== TÉLÉCHARGEMENT ET SAUVEGARDE ====================
 
 # Télécharger le dataset depuis scikit-learn
 # (mise en cache local après le premier téléchargement)
